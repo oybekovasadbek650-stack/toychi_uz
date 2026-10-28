@@ -1,0 +1,208 @@
+@use "../styles/variables" as *;
+
+.envelope {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  overflow: hidden;
+  background: $bg;
+  transition: opacity 0.9s $ease-ios, visibility 0.9s, transform 0.9s $ease-ios,
+    filter 0.9s $ease-ios;
+
+  &--opened {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    filter: blur(14px);
+  }
+
+  // Xira fon rasmi, sekin suzib turadi
+  &__bg {
+    position: absolute;
+    inset: -40px;
+    background-size: cover;
+    background-position: center;
+    filter: blur(16px) brightness(0.95);
+    animation: kenburns 20s ease-in-out infinite alternate;
+  }
+
+  // Iliq rangli parda
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba($bg, 0.35), rgba(#3d2f1c, 0.55));
+  }
+
+  // Ko'tarilayotgan oltin nurlar
+  &__light {
+    position: absolute;
+    bottom: -30px;
+    left: var(--x);
+    width: var(--s);
+    height: var(--s);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(#fff3d6, 0.95), rgba(#e8c98a, 0) 70%);
+    opacity: 0;
+    animation: floatUp var(--d) linear var(--delay) infinite;
+  }
+
+  // Muzli oyna kartochka
+  &__card {
+    position: relative;
+    width: min(340px, 100%);
+    padding: 44px 28px 32px;
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    animation: cardIn 1.2s $ease-spring backwards;
+
+    // Ichidagi elementlar birin-ketin chiqadi
+    > * {
+      animation: fadeUp 0.9s $ease-ios backwards;
+    }
+
+    @for $i from 1 through 6 {
+      > :nth-child(#{$i}) {
+        animation-delay: #{0.4 + $i * 0.15}s;
+      }
+    }
+  }
+
+  &__small {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: $text;
+  }
+
+  &__names {
+    font-family: $font-script;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 1.1;
+    margin: 14px 0 10px;
+    background: linear-gradient(110deg, #8a6a32 20%, #e6c88f 40%, $gold 60%, #8a6a32 80%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: envShimmer 5s linear infinite;
+
+    span {
+      font-size: 0.6em;
+    }
+  }
+
+  &__line {
+    width: 60px;
+    height: 1px;
+    margin: 0 auto 10px;
+    background: $gold;
+  }
+
+  &__date {
+    font-family: $font-serif;
+    font-size: 18px;
+  }
+
+  // Oltin muhr
+  &__seal {
+    position: relative;
+    width: 92px;
+    height: 92px;
+    margin: 28px auto 12px;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font: 400 32px $font-script;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    background: radial-gradient(circle at 30% 30%, #ecd29c, $gold 45%, #7d5f2b 100%);
+    box-shadow: 0 10px 25px rgba(#7d5f2b, 0.5), inset 0 2px 6px rgba(255, 255, 255, 0.5),
+      inset 0 -4px 8px rgba(0, 0, 0, 0.25);
+
+    // "Nafas olayotgan" halqa
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1.5px solid rgba($gold, 0.7);
+      animation: ring 2.2s $ease-ios infinite;
+    }
+  }
+
+  &__hint {
+    font-size: 12px;
+    color: $text;
+    opacity: 0.7;
+  }
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1.25) translate(-2%, -2%);
+  }
+}
+
+@keyframes floatUp {
+  10% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.9);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+}
+
+@keyframes ring {
+  from {
+    transform: scale(0.92);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+@keyframes envShimmer {
+  to {
+    background-position: -200% center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .envelope__light,
+  .envelope__bg {
+    animation: none;
+  }
+}

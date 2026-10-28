@@ -1,0 +1,84 @@
+@use "../styles/variables" as *;
+
+.countdown {
+  padding: 56px 20px;
+  max-width: 520px;
+  margin: 0 auto;
+
+  &__title {
+    font-family: $font-serif;
+    font-weight: 600;
+    font-size: 32px;
+    color: $gold;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: $muted;
+    margin-bottom: 28px;
+  }
+
+  &__card {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 24px 14px;
+    background: #fff;
+    border-radius: $radius-lg;
+    border: 1px solid rgba($gold, 0.2);
+    box-shadow: $shadow-soft;
+  }
+
+  &__item {
+    position: relative;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      position: absolute;
+      inset: 0;
+      transform: rotate(-90deg); // halqa tepadan boshlansin
+    }
+
+    b {
+      position: relative;
+      font: 600 clamp(20px, 6vw, 28px) $font-serif;
+      line-height: 1;
+      color: $gold;
+      animation: tick 0.6s $ease-spring;
+    }
+
+    span {
+      position: relative;
+      margin-top: 4px;
+      font-size: clamp(8px, 2.4vw, 10px);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: $muted;
+    }
+  }
+
+  &__track {
+    fill: none;
+    stroke: rgba($gold, 0.12);
+    stroke-width: 4;
+  }
+
+  &__bar {
+    fill: none;
+    stroke: $gold;
+    stroke-width: 4;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s $ease-ios;
+  }
+}
+
+@keyframes tick {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.7);
+  }
+}

@@ -1,0 +1,33 @@
+@use "../styles/variables" as *;
+
+.footer {
+  padding: 48px 20px 40px;
+  border-top: 1px solid $gold-light;
+  max-width: 520px;
+  margin: 0 auto;
+
+  &__names {
+    font-family: $font-script;
+    font-size: 40px;
+    color: $gold;
+  }
+
+  &__thanks {
+    font-family: $font-serif;
+    font-size: 18px;
+    font-style: italic;
+    margin-top: 8px;
+  }
+
+  &__author {
+    display: inline-block;
+    margin-top: 32px;
+    font-size: 11px;
+    color: $muted;
+    text-decoration: none;
+
+    &:hover {
+      color: $gold;
+    }
+  }
+}
